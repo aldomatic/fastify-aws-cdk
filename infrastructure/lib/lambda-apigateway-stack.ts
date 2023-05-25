@@ -18,7 +18,7 @@ export class LambdaApigatewayStack extends cdk.Stack {
     const OrderFunction = new NodejsFunction(this, 'OrderFunction', {
       memorySize: 1024,
       timeout: cdk.Duration.seconds(5),
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_18_X,
       handler: 'handler',
       entry: path.join(__dirname, `/../lambda/app.ts`),
       environment: {
@@ -27,9 +27,8 @@ export class LambdaApigatewayStack extends cdk.Stack {
     });
     
     // set resource path and method for lambda function
-     OrderCreateAPI.root
-     .resourceForPath("/order")
-    .addMethod("GET", new LambdaIntegration(OrderFunction));
+     OrderCreateAPI.root.resourceForPath("/order")
+      .addMethod("GET", new LambdaIntegration(OrderFunction));
     
   }
 }
